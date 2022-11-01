@@ -1,5 +1,13 @@
-spring:
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    url: /open-api.yaml
+    show-extensions: true
+    show-common-extensions: true
+    try-it-out-enabled: true
 
+spring:
   datasource:
     url: jdbc:postgresql://localhost/spring
     username: postgres

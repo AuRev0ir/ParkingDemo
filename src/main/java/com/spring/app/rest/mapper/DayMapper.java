@@ -6,10 +6,12 @@ import com.spring.app.dao.model.Parking;
 import com.spring.app.rest.dto.CityDto;
 import com.spring.app.rest.dto.DayDto;
 import com.spring.app.rest.dto.ParkingDto;
+import org.mapstruct.Mapper;
 
 import java.util.List;
 import java.util.Set;
 
+@Mapper
 public interface DayMapper {
 
     DayDto toDto (Day day);

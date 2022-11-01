@@ -18,14 +18,25 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<lombok.version>1.18.24</lombok.version>
 		<mapstruct.version>1.5.2.Final</mapstruct.version>
+		<springdoc.version>1.6.9</springdoc.version>
+		<jackson-databind-nullable.version>0.2.3</jackson-databind-nullable.version>
+		<openapi-generator-maven-plugin.version>6.0.1</openapi-generator-maven-plugin.version>
 	</properties>
-	<dependencies>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
-
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -33,16 +44,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<optional>true</optional>
 		</dependency>
-
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
@@ -50,15 +54,23 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openapitools</groupId>
+			<artifactId>jackson-databind-nullable</artifactId>
+			<version>${jackson-databind-nullable.version}</version>
 		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -85,18 +97,48 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
-
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
+				<groupId>org.openapitools</groupId>
+				<artifactId>openapi-generator-maven-plugin</artifactId>
+				<version>${openapi-generator-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>generate-open-api-example</id>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<inputSpec>
+								${project.basedir}/src/main/java/resources/static/open-api.yaml
+							</inputSpec>
+							<generatorName>spring</generatorName>
+							<apiPackage>com.spring.app.rest.controller</apiPackage>
+							<modelPackage>com.spring.app.rest.dto</modelPackage>
+							<generateSupportingFiles>false</generateSupportingFiles>
+							<configOptions>
+								<bigDecimalAsString>true</bigDecimalAsString>
+								<booleanGetterPrefix>is</booleanGetterPrefix>
+								<hideGenerationTimestamp>true</hideGenerationTimestamp>
+								<skipDefaultInterface>true</skipDefaultInterface>
+								<useTags>true</useTags>
+								<sourceFolder>src/gen/java</sourceFolder>
+								<interfaceOnly>true</interfaceOnly>
+								<dateLibrary>java8</dateLibrary>
+								<java8>true</java8>
+								<library>spring-cloud</library>
+								<useBeanValidation>true</useBeanValidation>
+								<useClassLevelBeanValidation>false</useClassLevelBeanValidation>
+								<useRuntimeException>true</useRuntimeException>
+							</configOptions>
+							<typeMappings>
+								<typeMapping>OffsetDateTime=LocalDateTime</typeMapping>
+							</typeMappings>
+							<importMappings>
+								<importMapping>java.time.OffsetDateTime=java.time.LocalDateTime</importMapping>
+							</importMappings>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
