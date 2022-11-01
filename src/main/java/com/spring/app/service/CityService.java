@@ -2,10 +2,13 @@ package com.spring.app.service;
 
 import com.spring.app.dao.model.Address;
 import com.spring.app.dao.model.City;
+import com.spring.app.rest.dto.CityDto;
+
+import java.util.UUID;
 
 public interface CityService {
 
-    City add (String name);
-    City getInfo (long parkingId);
+    CityDto add (String name);
+    CityDto getInfo (UUID parkingId);
 
 }

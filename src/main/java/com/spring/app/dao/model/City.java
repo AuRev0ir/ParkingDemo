@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "cities")
@@ -17,10 +18,8 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE) // Все поля приватные
 public class City {
 
-    // Поменять на UUID
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    UUID id;
 
     @Column(nullable = false)
     String name;

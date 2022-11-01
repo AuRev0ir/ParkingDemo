@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.UUID;
 
 
 @Entity
@@ -19,10 +20,8 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE) // Все поля приватные
 public class Parking {
 
-    // Поменять на UUID
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    UUID id;
 
     @Column(nullable = false)
     String name;
@@ -53,7 +52,6 @@ public class Parking {
     @Column(name = "deleted")
     boolean isDeleted;
 
-    // Могу ошибаться
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "parking_days",
             joinColumns =@JoinColumn(name = "parking_id"),

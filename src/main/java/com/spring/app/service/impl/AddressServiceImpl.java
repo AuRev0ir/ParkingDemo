@@ -4,11 +4,16 @@ import com.spring.app.dao.model.Address;
 import com.spring.app.dao.repository.AddressRepository;
 import com.spring.app.dao.repository.CityRepository;
 import com.spring.app.dao.repository.ParkingRepository;
+import com.spring.app.rest.dto.AddressDto;
+import com.spring.app.rest.mapper.AddressMapper;
+import com.spring.app.rest.mapper.CityMapper;
 import com.spring.app.service.AddressService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 
 @Service
@@ -17,30 +22,31 @@ import org.springframework.stereotype.Service;
 public class AddressServiceImpl implements AddressService {
 
     ParkingRepository parkingRepository;
-
     CityRepository cityRepository;
+    AddressMapper addressMapper;
+    CityMapper cityMapper;
     AddressRepository addressRepository;
 
-
-    // нужно dto
     @Override
-    public Address add(String cityName, String name, int houseNumber) {
+    public AddressDto add (AddressDto dto) {
+
         var cityFromDB = cityRepository
-                .findByName(cityName)
+                .findByName(dto.getCity().getName())
                 .orElseThrow(() -> new RuntimeException("City not found in database"));
 
-        return addressRepository.save(new Address(cityFromDB, name, houseNumber));
+        return addressMapper.toDto(addressRepository.save(new Address(
+                cityMapper.toEntity(dto.getCity()),dto.getName(),dto.getHouseNumber())));
     }
 
     @Override
-    public Address getInfo(long parkingId) {
+    public AddressDto getInfo(UUID parkingId) {
 
         var parkingFromDB = parkingRepository
                 .findById(parkingId)
                 .orElseThrow(() -> new RuntimeException("Parking not found in database"));
 
-        return addressRepository
+        return addressMapper.toDto(addressRepository
                 .findById(parkingFromDB.getAddress().getId())
-                .orElseThrow(() -> new RuntimeException("Address not found in database"));
+                .orElseThrow(() -> new RuntimeException("Address not found in database")));
     }
 }

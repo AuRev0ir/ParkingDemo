@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "days")
@@ -16,10 +17,8 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE) // Все поля приватные
 public class Day {
 
-    // Поменять на UUID
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    UUID id;
 
     @Enumerated(EnumType.STRING)
     DaysEnum name;

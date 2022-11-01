@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name = "addresses")
@@ -17,10 +18,8 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE) // Все поля приватные
 public class Address {
 
-    // Поменять на UUID
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    UUID id;
 
     @ManyToOne(targetEntity = City.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id", nullable = false)
