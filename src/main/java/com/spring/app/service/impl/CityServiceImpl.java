@@ -24,8 +24,8 @@ public class CityServiceImpl implements CityService {
     CityMapper cityMapper;
 
     @Override
-    public CityDto add(String name) {
-        return cityMapper.toDto(cityRepository.save(new City(name)));
+    public CityDto add(CityDto dto) {
+        return cityMapper.toDto(cityRepository.save(new City(dto.getName())));
     }
 
     @Override
