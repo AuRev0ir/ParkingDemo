@@ -16,7 +16,7 @@ public interface DayMapper {
 
     DayDto toDto (Day day);
 
-    Set<DayDto> toDto (Set<Parking> parking);
+    Set<DayDto> toDto (Set<Day> days);
     Day toEntity (DayDto dayDto);
 
     Set<Day> toEntity (Set<DayDto> parking);
