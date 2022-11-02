@@ -10,5 +10,4 @@ public interface AddressRepository extends JpaRepository<Address, UUID> {
 
     Optional<Address> findByName(String name);
 
-    boolean existsByName(String addressName);
 }

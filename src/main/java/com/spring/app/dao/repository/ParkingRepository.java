@@ -8,5 +8,4 @@ import java.util.UUID;
 
 public interface ParkingRepository extends JpaRepository <Parking, UUID> {
 
-    boolean existsById(long id);
 }
