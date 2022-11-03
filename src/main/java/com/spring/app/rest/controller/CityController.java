@@ -24,8 +24,8 @@ public class CityController {
     }
 
     @PostMapping("/сity")
-    public CityDto add (CityDto dto){
-        return cityService.add(dto);
+    public boolean add (CityDto dto){
+        return cityService.addCity(dto);
     }
 
 }

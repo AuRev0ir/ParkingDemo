@@ -18,7 +18,7 @@ import java.util.UUID;
 public class Day {
 
     @Id
-    UUID id;
+    UUID idd;
 
     @Enumerated(EnumType.STRING)
     DaysEnum name;

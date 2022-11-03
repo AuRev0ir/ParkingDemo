@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface CityService {
 
-    CityDto add (CityDto name);
+    boolean addCity (CityDto name);
     CityDto getInfo (UUID parkingId);
 
 }

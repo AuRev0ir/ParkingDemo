@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
+import java.util.EmptyStackException;
 import java.util.UUID;
 
 
@@ -24,8 +25,16 @@ public class CityServiceImpl implements CityService {
     CityMapper cityMapper;
 
     @Override
-    public CityDto add(CityDto dto) {
-        return cityMapper.toDto(cityRepository.save(new City(dto.getName())));
+    public boolean addCity (CityDto cityFillFormDto) {
+
+        if (cityFillFormDto.getName() == null){
+            return false;
+        }
+
+        var newCity = cityMapper.toEntity(cityFillFormDto);
+        cityRepository.save(newCity);
+        return true;
+
     }
 
     @Override
